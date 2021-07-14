@@ -1,3 +1,4 @@
+const logger = require('../utils/logger')
 const logModel = require('./log-model')
 const { clearObj, dateBetween } = require('../utils/commons')
 
@@ -21,7 +22,13 @@ const formatLog = (l) => `${l.uuid}, [${l.level || 0}], ${l.executionTime || '0m
 
 const findById = (id) => logModel.findById(id).lean()
 
+const onMessage = (data) => insert(data).then(logger.info)
+
+const insert = (data) => logModel.create(data)
+
 module.exports = {
-    findByFilter,
-    findById
+    insert,
+    findById,
+    onMessage,
+    findByFilter    
 }
