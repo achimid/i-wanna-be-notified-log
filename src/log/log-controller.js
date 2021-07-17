@@ -19,5 +19,12 @@ router.get('/:id', validatePathId, (req, res) => {
         .catch(res.onError)
 })
 
+router.delete('/uuid/:uuid', (req, res) => {
+    console.log('Delete logs by filter')
+    return service.removeByUuid(req.params.uuid)
+        .then(() => res.status(OK).send())
+        .catch(res.onError)
+})
+
 
 module.exports = router

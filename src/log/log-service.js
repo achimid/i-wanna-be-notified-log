@@ -22,6 +22,8 @@ const formatLog = (l) => `${l.uuid}, [${l.level || 0}], ${l.executionTime || '0m
 
 const findById = (id) => logModel.findById(id).lean()
 
+const removeByUuid = (uuid) => logModel.deleteMany({ uuid }).lean()
+
 const onMessage = (data) => insert(data).then(logger.info)
 
 const insert = (data) => logModel.create(data)
@@ -30,5 +32,6 @@ module.exports = {
     insert,
     findById,
     onMessage,
-    findByFilter    
+    removeByUuid,
+    findByFilter
 }
