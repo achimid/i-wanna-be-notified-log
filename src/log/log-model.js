@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const { createConnectionLog } = require('../config/database')
 
 const schema = mongoose.Schema({    
     uuid: { type: String }, 
@@ -10,5 +9,4 @@ const schema = mongoose.Schema({
     createdAt: { type: Date, required: true, default: new Date() }
 }, { versionKey: false, timestamps: false })
 
-const Log = createConnectionLog().model('logs', schema)
-module.exports = Log
+module.exports = mongoose.model('logs', schema)
