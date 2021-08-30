@@ -26,5 +26,10 @@ router.delete('/uuid/:uuid', (req, res) => {
         .catch(res.onError)
 })
 
+router.get('/stream', (req, res) => {
+    console.log('Streaming Logs')
+    return service.stream(req)
+        .catch(res.onError)
+})
 
 module.exports = router

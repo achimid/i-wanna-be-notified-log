@@ -3,6 +3,7 @@ const logModel = require('./log-model')
 const { clearObj, dateBetween } = require('../utils/commons')
 
 const limit = parseInt(process.env.DEFAULT_ENDPOINT_LIST_LIMIT)
+const streamingList = []
 
 const findByFilter = (filter) => {
     const { startDate, endDate, uuid, type } =  filter
@@ -24,7 +25,13 @@ const findById = (id) => logModel.findById(id).lean()
 
 const removeByUuid = (uuid) => logModel.deleteMany({ uuid }).lean()
 
-const onMessage = (data) => insert(data).then(logger.info)
+const onMessage = (data) => insert(data)
+    .then(data => {
+        logger.info(data)
+        streamingList.map(res => res.write(`${data} \n`))
+    })
+
+const stream = (res) => streamingList.push(res)
 
 const insert = (data) => logModel.create(data)
 
@@ -33,5 +40,6 @@ module.exports = {
     findById,
     onMessage,
     removeByUuid,
-    findByFilter
+    findByFilter,
+    stream
 }
