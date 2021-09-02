@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const schema = mongoose.Schema({    
-    uuid: { type: String }, 
+    uuid: { type: String, index: true }, 
     executionTime: { type: String }, 
     level: { type: String },
     log: { type: String }, 
